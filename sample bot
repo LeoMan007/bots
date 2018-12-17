@@ -1,0 +1,26 @@
+while True:
+    import fbchat 
+    from getpass import getpass 
+    #username ="usename" #str(input("username"))  getpass()
+    client = fbchat.Client(username, parol ) 
+    #name=str(input("Name: "))
+    #friends = client.searchForThreads(name)
+    #print(friends)
+    #friend = friends[0]
+    inbox=client.fetchThreadList(limit=10)
+    inbox.reverse()
+    for ms in inbox:
+        last_msg=ms
+    print("User's name: {}".format(last_msg.name))
+    print("User's main url: {}".format(last_msg.url))
+    messages =client.fetchThreadMessages(thread_id=last_msg.uid, limit=10)
+    messages.reverse()
+    for message in messages:
+        last_message=message.text.upper()
+    if message.author!='own.uid' and last_message.find('SALAM')!=-1: 
+        #msg = str(input("Message: "))
+        client.send(fbchat.Message(text='Salam'), thread_id=last_msg.uid, thread_type=fbchat.ThreadType.USER)
+        print("message sent successful")
+        from gc import  collect
+        collect()
+        #client.logout()
